@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('main') }}"><img class="me-3" src="{{ asset('images/s-orange.svg') }}" alt="" width="32" height="32"/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbars">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle{% if '' in current_path %} active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Jeux de rôle</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                        <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Dark Heresy</a></li>
+                        <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Deathwatch</a></li>
+                        <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Extractions</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Historiques</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {% if app.user %}
+                    {%  if 'ROLE_ADMIN' in app.user.roles %}
+                    <li class="nav-item">
+                        <a href="{{ path('admin') }}" class="nav-link"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('profile_index', {id: app.user.id}) }}" class="nav-link"><i class="fa-solid fa-user"></i> {{ app.user.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_logout') }}" class="nav-link"><i class="fa-solid fa-power-off"></i></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_login') }}" class="nav-link">Me connecter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_register') }}" class="nav-link">M'inscrire</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
