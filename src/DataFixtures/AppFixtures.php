@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\B2\Observations;
 use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -21,13 +20,12 @@ class AppFixtures extends Fixture
         $admin = new Users();
         $admin->setEmail('admin@sifflote.fr');
         $admin->setUsername('Admin');
-        $admin->setB2RejetsPerPage(500);
         $admin->setIsVerified(1);
         $admin->setMdpUse(1);
         $admin->setPassword(
             $this->passwordHasher->hashPassword($admin, 'password')
         );
-        $admin->setRoles(['ROLE_USER', 'ROLE_B2', 'ROLE_ADMIN']);
+        $admin->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
         $manager->persist($admin);
 
         $faker = Faker\Factory::create('fr_FR');
@@ -36,7 +34,6 @@ class AppFixtures extends Fixture
             $user = new Users();
             $user->setEmail($faker->email);
             $user->setUsername($faker->userName);
-            $user->setB2RejetsPerPage(500);
             $user->setRoles(['ROLE_USER']);
             $user->setMdpUse(true);
             $user->setPlainpassword('secret');

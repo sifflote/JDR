@@ -14,37 +14,35 @@ class UsersListener
         $this->hasher = $hasher;
     }
 
-
     public function prePersist(Users $user)
     {
         $this->encodePassword($user);
     }
-
-
 
     public function preUpdate(Users $user)
     {
         $this->encodePassword($user);
     }
 
-
     /**
-     * Encode password basé sur le plainpassword
+     * Encode password based on plain password
      *
      * @param Users $user
      * @return void
      */
     public function encodePassword(Users $user)
     {
-        if($user->getPlainPassword() === null) {
+        if ($user->getPlainPassword() === null) {
             return;
         }
 
         $user->setPassword(
             $this->hasher->hashPassword(
                 $user,
-                $user->getPlainpassword()
+                $user->getPlainPassword()
             )
         );
+
+        $user->setPlainPassword(null);
     }
 }

@@ -2,15 +2,11 @@
 
 namespace App\Entity;
 
-use App\Entity\B2\Historique;
-use App\Entity\B2\Traitements;
 use App\Repository\UsersRepository;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface as PasswordAuthenticatedUserInterfaceAlias;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\EntityListeners(['App\EntityListener\UsersListener'])]
 #[UniqueEntity(fields: ['email'], message: 'Cet e-mail est déjà utilisé.')]
 #[ORM\Table(name: 'users')]
-class Users implements UserInterface, PasswordAuthenticatedUserInterfaceAlias // Pas d'erreur ici
+class Users implements UserInterface // Pas d'erreur ici
 {
 
     #[ORM\Id]
@@ -58,6 +54,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterfaceAlias //
     #[Assert\NotNull()]
     private DateTimeImmutable $createdAt;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull()]
+    private \DateTimeImmutable $updatedAt;
+
     #[ORM\Column(type: 'boolean')]
     private $googleUse = 0;
 
@@ -68,8 +68,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterfaceAlias //
 
     public function __construct()
     {
-
         $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -205,6 +205,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterfaceAlias //
         $this->createdAt = $createdAt;
     }
 
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
 
     /**
      * @return string|null
@@ -213,6 +225,19 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterfaceAlias //
     {
         return $this->plainpassword;
     }
+
+    /**
+     * Set the value of plainPassword
+     *
+     * @return  self
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
 
     public function getGoogleUse(): ?bool
     {
