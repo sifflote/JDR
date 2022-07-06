@@ -2,8 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\B2\Observations;
-use App\Entity\B2\Uh;
+use App\Entity\DH\DhMondeNatal;
 use App\Entity\Users;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -35,9 +34,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-users', Users::class);
 
-        yield MenuItem::section('B2', 'fa-solid fa-map');
-        yield MenuItem::linkToCrud('Observations', 'fa-solid fa-rectangle-list', Observations::class);
-        yield MenuItem::linkToCrud('UH', 'fa-solid fa-list', Uh::class);
+        yield MenuItem::section('Dark Heresy', 'fa-solid fa-map');
+        yield MenuItem::linkToCrud('Monde Natal', 'fa-solid fa-rectangle-list', DhMondeNatal::class);
+
 
     }
 }

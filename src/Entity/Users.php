@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\DH\DhPersonnage;
 use App\Repository\UsersRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -64,12 +67,16 @@ class Users implements UserInterface // Pas d'erreur ici
     #[ORM\Column(type: 'boolean')]
     private $mdpUse = 0;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: DhPersonnage::class, orphanRemoval: true)]
+    private $dhPersonnages;
+
 
 
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->dhPersonnages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -259,6 +266,36 @@ class Users implements UserInterface // Pas d'erreur ici
     public function setMdpUse(bool $mdpUse): self
     {
         $this->mdpUse = $mdpUse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DhPersonnage>
+     */
+    public function getDhPersonnages(): Collection
+    {
+        return $this->dhPersonnages;
+    }
+
+    public function addDhPersonnage(DhPersonnage $dhPersonnage): self
+    {
+        if (!$this->dhPersonnages->contains($dhPersonnage)) {
+            $this->dhPersonnages[] = $dhPersonnage;
+            $dhPersonnage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDhPersonnage(DhPersonnage $dhPersonnage): self
+    {
+        if ($this->dhPersonnages->removeElement($dhPersonnage)) {
+            // set the owning side to null (unless already changed)
+            if ($dhPersonnage->getUser() === $this) {
+                $dhPersonnage->setUser(null);
+            }
+        }
 
         return $this;
     }
