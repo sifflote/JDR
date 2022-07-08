@@ -34,9 +34,20 @@ class MondeNatalCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideOnForm(),
             TextField::new('name'),
-            TextareaField::new('description'),
+            TextareaField::new('description')->hideOnIndex(),
             IntegerField::new('min'),
             IntegerField::new('max'),
+            IntegerField::new('CT')->hideOnIndex(),
+            IntegerField::new('CC')->hideOnIndex(),
+            IntegerField::new('E')->hideOnIndex(),
+            IntegerField::new('F')->hideOnIndex(),
+            IntegerField::new('Ag')->hideOnIndex(),
+            IntegerField::new('Intel')->hideOnIndex(),
+            IntegerField::new('Per')->hideOnIndex(),
+            IntegerField::new('FM')->hideOnIndex(),
+            IntegerField::new('Soc')->hideOnIndex(),
+            TextField::new('ptsBlessure'),
+            TextField::new('ptsDestin'),
         ];
     }
 
