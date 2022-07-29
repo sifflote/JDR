@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\EntityListeners(['App\EntityListener\UsersListener'])]
 #[UniqueEntity(fields: ['email'], message: 'Cet e-mail est déjà utilisé.')]
 #[ORM\Table(name: 'users')]
-class Users implements UserInterface // Pas d'erreur ici
+class Users implements UserInterface, PasswordAuthenticatedUserInterface // Pas d'erreur ici
 {
 
     #[ORM\Id]

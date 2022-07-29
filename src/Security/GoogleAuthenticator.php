@@ -61,13 +61,13 @@ class GoogleAuthenticator extends OAuth2Authenticator
                     $existingUser->setResetToken("");
                     $existingUser->setGoogleUse(1);
                     $existingUser->setUsername($googleUser->getName());
+                    $existingUser->setRoles(["ROLE_USER"]);
                     //$existingUser->setHostedDomain($googleUser->getHostedDomain());
                     $this->entityManager->persist($existingUser);
                 }
                 $existingUser->setGoogleId($googleUser->getId());
                 $existingUser->setGoogleUse(1);
                 $existingUser->setIsVerified(1);
-                $existingUser->setRoles(["ROLE_USER"]);
                 //$existingUser->setAvatar($googleUser->getAvatar());
                 $this->entityManager->flush();
 
