@@ -6,6 +6,7 @@ use App\Entity\DH\DhCarriere;
 use App\Entity\DH\DhCompetence;
 use App\Entity\DH\DhMondeNatal;
 use App\Entity\DH\DhTalent;
+use App\Entity\DH\DhTrait;
 use App\Entity\Users;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,6 +43,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Compétences', 'fa-solid fa-rectangle-list', DhCompetence::class);
         yield MenuItem::linkToCrud('Monde Natal', 'fa-solid fa-rectangle-list', DhMondeNatal::class);
         yield MenuItem::linkToCrud('Talents', 'fa-solid fa-rectangle-list', DhTalent::class);
+        yield MenuItem::linkToCrud('Traits', 'fa-solid fa-rectangle-list', DhTrait::class);
 
 
 
