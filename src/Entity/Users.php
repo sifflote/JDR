@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Banque\Compte;
 use App\Entity\DH\DhPersonnage;
 use App\Repository\UsersRepository;
 use DateTimeImmutable;
@@ -70,6 +71,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface // Pas 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DhPersonnage::class, orphanRemoval: true)]
     private $dhPersonnages;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Compte::class, orphanRemoval: true)]
+    private Collection $comptes;
+
 
 
     public function __construct()
@@ -77,6 +81,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface // Pas 
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
         $this->dhPersonnages = new ArrayCollection();
+        $this->comptes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,6 +299,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface // Pas 
             // set the owning side to null (unless already changed)
             if ($dhPersonnage->getUser() === $this) {
                 $dhPersonnage->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compte>
+     */
+    public function getComptes(): Collection
+    {
+        return $this->comptes;
+    }
+
+    public function addCompte(Compte $compte): static
+    {
+        if (!$this->comptes->contains($compte)) {
+            $this->comptes->add($compte);
+            $compte->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompte(Compte $compte): static
+    {
+        if ($this->comptes->removeElement($compte)) {
+            // set the owning side to null (unless already changed)
+            if ($compte->getUser() === $this) {
+                $compte->setUser(null);
             }
         }
 

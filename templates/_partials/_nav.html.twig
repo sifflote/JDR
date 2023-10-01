@@ -18,6 +18,16 @@
                         {% endif %}
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle{% if '' in current_path %} active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Banque</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                        <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Mes Comptes</a></li>
+                        <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Prévision</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a class="dropdown-item{% if '' in current_path %} active{%  endif %}" href="#">Historiques</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
                 {% if is_granted('ROLE_ADMIN') %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
